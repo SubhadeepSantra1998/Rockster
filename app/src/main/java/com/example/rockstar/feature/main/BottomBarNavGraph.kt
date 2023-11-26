@@ -40,6 +40,9 @@ fun BottomBarNavGraph(
                 sharedViewModel = sharedViewModel,
                 onBackScreen = {
                     navController.navigateUp()
+                },
+                onHomeScreen = {
+                    navController.navigate(BottomMenu.Home.route)
                 }
             )
         }

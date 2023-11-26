@@ -42,7 +42,8 @@ import com.example.rockstar.feature.viewModel.SharedViewModel
 fun CartScreen(
     modifier: Modifier,
     sharedViewModel: SharedViewModel,
-    onBackScreen:() -> Unit
+    onBackScreen:() -> Unit,
+    onHomeScreen:() -> Unit,
 ) {
 
     val cartItems by rememberUpdatedState(newValue = sharedViewModel._cartItems)
@@ -116,6 +117,7 @@ fun CartScreen(
                 onConfirmation = {
                      sharedViewModel.resetData()
                     openDialog = false
+                    onHomeScreen()
                 },
                 onDismissRequest = {
                     openDialog = false
