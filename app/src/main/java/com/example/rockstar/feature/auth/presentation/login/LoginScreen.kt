@@ -1,7 +1,10 @@
 package com.example.rockstar.feature.auth.presentation.login
 
+import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +16,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,33 +30,31 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.rockstar.R
 import com.example.rockstar.common.component.BodyMediumTextComponent
 import com.example.rockstar.common.component.HeadlineTextComponent
+import com.example.rockstar.common.component.LoadingBarComponent
 import com.example.rockstar.common.component.MediumTextButtonComponent
+import com.example.rockstar.common.component.OtpInputField
 import com.example.rockstar.common.component.PhoneTextField
 import com.example.rockstar.common.component.PrimaryButtonComponent
+import com.example.rockstar.common.util.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
-    onOTPScreen: () -> Unit,
+    onHomeScreen:() -> Unit,
     viewModel: LoginViewModel = hiltViewModel(),
+    activity: Activity,
 ) {
 
-    LoginScreenContent(
-        onOTPScreen = onOTPScreen,
-        uiState = viewModel.uiState,
-        onEvent = {
-            viewModel.onEvent(it)
-        },
-    )
-}
+    val scope = rememberCoroutineScope()
+    var mobile by remember { mutableStateOf("")}
+    var otp by remember { mutableStateOf("")}
+    var isDialog by remember{ mutableStateOf(false)}
 
-@Composable
-fun LoginScreenContent(
-    onOTPScreen: () -> Unit,
-    uiState: LoginUiState,
-    onEvent: (LoginUiEvent) -> Unit,
-) {
 
-    Surface(
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
@@ -73,11 +79,58 @@ fun LoginScreenContent(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                PhoneTextField(textState = uiState.phNo, onTextChange = {
-                    onEvent(LoginUiEvent.PhoneNoChanged(it))
+                PhoneTextField(textState = mobile, onTextChange = {
+                    mobile = it
                 }, modifier = Modifier.fillMaxWidth())
 
+                Spacer(modifier = Modifier.height(24.dp))
+
                 PrimaryButtonComponent(text = stringResource(id = R.string.send_otp), onClick = {
+                    scope.launch(Dispatchers.Main){
+
+                        viewModel.sendOTP(mobile, activity).collect{
+                            when(it){
+                                is Resource.Success->{
+                                    isDialog = false
+                                }
+                                is Resource.Failure->{
+                                    isDialog = false
+                                }
+                                Resource.Loading->{
+                                    isDialog = true
+                                }
+                            }
+                        }
+                    }
+
+                })
+
+                Spacer(modifier = Modifier.height(80.dp))
+
+                OtpInputField(onOtpChanged = { code ->
+                    otp = code
+                })
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                PrimaryButtonComponent(text = stringResource(id = R.string.verify_otp), onClick = {
+                    scope.launch(Dispatchers.Main){
+                        viewModel.verifyOTP(otp).collect{
+                            when(it){
+                                is Resource.Success->{
+                                    isDialog = false
+                                    onHomeScreen()
+                                }
+                                is Resource.Failure->{
+                                    isDialog = false
+                                }
+                                Resource.Loading->{
+                                    isDialog = true
+                                }
+                            }
+                        }
+                    }
+
 
                 })
             }
@@ -95,5 +148,7 @@ fun LoginScreenContent(
                 }
             }
         }
+        if(isDialog)
+            LoadingBarComponent(modifier = Modifier.align(Alignment.Center))
     }
 }

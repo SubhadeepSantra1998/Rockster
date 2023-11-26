@@ -70,65 +70,15 @@ fun PhoneTextField(
         label = { Text(text = stringResource(id = R.string.phno)) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Email, imeAction = imeAction
+            keyboardType = KeyboardType.Phone, imeAction = imeAction
         ),
-//        isError = isError,
-//        leadingIcon = {
-//            Icon(
-//                painterResource(id = R.drawable.ic_email),
-//                contentDescription = stringResource(id = R.string.email)
-//            )
-//        },
-        textStyle = MaterialTheme.typography.titleSmall
+        textStyle = MaterialTheme.typography.titleSmall,
+        prefix = {
+            Text(text = "+91")
+        }
     )
 }
 
-
-//@Composable
-//fun PasswordEditTextComponent(
-//    passwordState: String,
-//    onPasswordChange: (String) -> Unit,
-//    modifier: Modifier = Modifier,
-//    imeAction: ImeAction = ImeAction.Done,
-//    label: String,
-//) {
-//    var isPasswordVisible by remember { mutableStateOf(false) }
-//    val localFocusManager = LocalFocusManager.current
-//
-//
-//    OutlinedTextField(
-//        value = passwordState,
-//        onValueChange = { onPasswordChange(it) },
-//        modifier = modifier,
-//        label = { Text(text = label) },
-//        singleLine = true,
-//        keyboardOptions = KeyboardOptions(
-//            keyboardType = KeyboardType.Password, imeAction = imeAction
-//        ),
-//        keyboardActions = KeyboardActions {
-//            localFocusManager.clearFocus()
-//        },
-//        isError = isError,
-//        visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-//        leadingIcon = {
-//            Icon(
-//                painterResource(id = R.drawable.ic_lock),
-//                contentDescription = stringResource(id = R.string.lock)
-//            )
-//        },
-//        trailingIcon = {
-//            IconButton(onClick = { isPasswordVisible = !isPasswordVisible }, content = {
-//                Icon(
-//                    imageVector = if (isPasswordVisible) ImageVector.vectorResource(id = R.drawable.ic_eye_visible) else ImageVector.vectorResource(
-//                        id = R.drawable.ic_eye_invisible
-//                    ),
-//                    contentDescription = if (isPasswordVisible) "Hide Password" else "Show Password",
-//                )
-//            })
-//        },
-//        textStyle = MaterialTheme.typography.titleSmall,
-//    )
-//}
 
 @Composable
 fun BasicEditTextComponent(

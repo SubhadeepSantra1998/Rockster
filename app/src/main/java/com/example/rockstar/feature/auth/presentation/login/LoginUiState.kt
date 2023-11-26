@@ -7,5 +7,6 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val phNo: String = "",
     val phNoError: Int? = null,
+    val otp: String = "",
     val isLoggedIn: Boolean = false,
 )

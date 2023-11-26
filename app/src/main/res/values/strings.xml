@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">RockStar</string>
     <string name="login">Login</string>
-    <string name="phno">Phone number</string>
+    <string name="phno">Phone</string>
     <string name="back_arrow">Back arrow</string>
     <string name="send_otp">Send OTP</string>
     <string name="don_t_have_an_account">Dont have an account?</string>
     <string name="register">Register</string>
+    <string name="verify_otp">Verify OTP</string>
 </resources>

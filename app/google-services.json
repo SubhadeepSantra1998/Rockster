@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916489709269",
+    "project_id": "rockstar-a7c94",
+    "storage_bucket": "rockstar-a7c94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916489709269:android:a9b71f43d7d9df97b1645c",
+        "android_client_info": {
+          "package_name": "com.example.rockstar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4cOglgSB1RP1HG2179UeNmRV3sDuP7NI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

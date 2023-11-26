@@ -363,6 +363,17 @@ fun BodySmallTextComponentPreview() {
     BodySmallTextComponent(text = "Hello")
 }
 
+
+@Composable
+fun MenuLabelComponent(text: String, fontWeight: FontWeight, fontColor: Color) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelMedium,
+        fontWeight = fontWeight,
+        color = fontColor
+    )
+}
+
 @Composable
 fun DescriptionTextComponent(
     modifier: Modifier = Modifier,
